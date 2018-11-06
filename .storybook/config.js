@@ -1,5 +1,5 @@
-import {configure} from '@storybook/react';
-import {setOptions} from '@storybook/addon-options'
+import {configure, addDecorator} from '@storybook/react';
+import {withOptions} from '@storybook/addon-options'
 
 import '../src/index.css'
 
@@ -12,9 +12,12 @@ function loadStories() {
   dynamicStories(require.context('../src/', true, /stories\/.*\.js$/))
 }
 
-setOptions({
-  hierarchySeparator: /\//,
-  hierarchyRootSeparator: /\|/,
-})
+addDecorator(
+  withOptions({
+    hierarchySeparator: /\//,
+    hierarchyRootSeparator: /\|/,
+    addonPanelInRight: true,
+  })
+)
 
 configure(loadStories, module)
