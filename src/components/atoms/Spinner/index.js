@@ -29,19 +29,19 @@ const spin = keyframes`
 
 
 const sizeToWidth = size => ({
-  [enums.Size.X_SMALL]: '1rem',
-  [enums.Size.SMALL]: '1.25rem',
+  [enums.Size.X_SMALL]: '0.8rem',
+  [enums.Size.SMALL]: '1rem',
   [enums.Size.LARGE]: '3rem',
   [enums.Size.X_LARGE]: '4rem',
-})[size] || '1.75rem';
+})[size] || '1.25rem';
 
 
 const sizeToBorderWidth = size => ({
-  [enums.Size.X_SMALL]: '0.1333rem',
-  [enums.Size.SMALL]: '0.1666rem',
+  [enums.Size.X_SMALL]: '0.105rem',
+  [enums.Size.SMALL]: '0.1333rem',
   [enums.Size.LARGE]: '0.3333rem',
   [enums.Size.X_LARGE]: '0.4333rem',
-})[size] || '0.2333rem';
+})[size] || '0.1666rem';
 
 
 const StyledSpinner = styled('div')`

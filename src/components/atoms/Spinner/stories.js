@@ -12,8 +12,9 @@ import {
   withThemeProvider,
   withCentered,
   Arrangement,
-  GeneratedArrangement,
+  VariedArrangement,
   Arrangements,
+  Spaced,
 } from '../../storyutils'
 import * as enums from '../../enums'
 import Spinner from './'
@@ -24,14 +25,32 @@ const ComponentUnderTest = Spinner
 
 storiesOf('Atoms|Spinner/Arrangements', module)
   .addDecorator(withThemeProvider())
-  .add('Variations', () => (
+  .add('Variations', () => {
+    const Component = nest(Spaced, ComponentUnderTest)
+    return (
       <Arrangements label="Variations">
-        <Arrangement label="Size">
-          <ComponentUnderTest size={enums.Size.X_SMALL} />
-          <ComponentUnderTest size={enums.Size.SMALL} />
-          <ComponentUnderTest size={enums.Size.DEFAULT} />
-          <ComponentUnderTest size={enums.Size.LARGE} />
-          <ComponentUnderTest size={enums.Size.X_LARGE} />
-        </Arrangement>
+        <VariedArrangement
+          label="Size"
+          variations={[
+            ['Extra small', {size: enums.Size.X_SMALL}],
+            ['Small', {size: enums.Size.SMALL}],
+            ['Default', {size: enums.Size.DEFAULT}],
+            ['Large', {size: enums.Size.LARGE}],
+            ['Extra large', {size: enums.Size.X_LARGE}]]}>
+          {Component}
+        </VariedArrangement>
       </Arrangements>
-    ))
+    )})
+
+
+storiesOf('Atoms|Spinner', module)
+  .addDecorator(withThemeProvider())
+  .addDecorator(withCentered())
+  .addDecorator(withKnobs)
+  //.add('README', () => <Markdown>{README}</Markdown>)
+  .add('Knobs', () => (
+    <Spinner
+      size={enumSelect('size', enums.Size, enums.Size.DEFAULT)}
+      color={enumSelect('color', [enums.Color, enums.Intent], enums.Color.DEFAULT)}
+    />
+  ))
