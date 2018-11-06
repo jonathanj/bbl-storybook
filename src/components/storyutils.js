@@ -4,7 +4,7 @@ import {ThemeProvider} from 'emotion-theming'
 import {select} from '@storybook/addon-knobs'
 import {renderComponent} from 'recompose'
 
-import defaultTheme from './theme'
+import defaultTheme, {themed} from './theme'
 import verbs from './verbs.json'
 
 
@@ -53,11 +53,11 @@ export const invert = (...os) => {
 
 
 /** Create a "select" knob from an enum. */
-export const enumSelect = (name, values, defaultValue) => {
+export const enumSelect = (name, values, ...args) => {
   if (!Array.isArray(values)) {
     values = [values]
   }
-  return select(name, invert(Object.assign({}, ...values)), defaultValue)
+  return select(name, Object.assign({}, ...values), ...args)
 }
 
 
@@ -104,6 +104,17 @@ export const Label = styled('div')`
   font-size: 0.75em;
   padding-top: 1ex;
   margin-bottom: -1ex;
+  color: #a7a7a7;
+`
+
+
+export const SpacedInline = styled('div')`
+  display: inline-block;
+  margin: 0 0.5rem;
+`
+
+export const Spaced = styled('div')`
+  margin: 0.5rem 0;
 `
 
 
@@ -178,6 +189,24 @@ export const BlockCentered = styled('div')`
 `
 
 
-export const withCentered = () => story => (
-  <BlockCentered>{story()}</BlockCentered>
-)
+export const Padded = styled('div')`
+  margin: 2rem;
+`
+
+
+export const withCentered = () => (story, {parameters: {isCentered=true}}) => {
+  if (isCentered) {
+    return (<BlockCentered>{story()}</BlockCentered>)
+  } else {
+    return (<Padded>{story()}</Padded>)
+  }
+}
+
+
+export const TinySwatch = styled('div')`
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: ${themed('shadow.elevation_2')};
+  background: ${props => props.color};
+`

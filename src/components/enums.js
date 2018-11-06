@@ -1,3 +1,6 @@
+import * as Feather from 'react-feather'
+
+
 export const Size = {
   X_SMALL: 'x_small',
   SMALL: 'small',
@@ -31,9 +34,29 @@ export const Intent = {
   PRIMARY: 'primary',
 }
 
+/*
 export const Icon = {
-  NONE: null,
+  NONE: '',
+  CAMERA: 'Camera',
+  ALERT_CIRCLE: 'AlertCircle',
+  BELL: 'Bell',
+  DOWNLOAD: 'Download',
+  FILE: 'File',
+  HELP_CIRCLE: 'HelpCircle',
+  INBOX: 'Inbox',
 }
+*/
+
+export const Icon = (() => {
+  const ks = Object.keys(Feather)
+  ks.sort()
+  const res = {NONE: ''}
+  for (const k of ks) {
+    const name = k.replace(/([a-z])([A-Z])/, '$1_$2')
+    res[name.toUpperCase()] = k
+  }
+  return res
+})()
 
 export const ButtonType = {
   DEFAULT: 'default',

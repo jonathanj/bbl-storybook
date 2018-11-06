@@ -3,7 +3,8 @@ import styled from 'react-emotion'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {withKnobs, boolean, select, text} from '@storybook/addon-knobs'
-import {nest, withProps} from 'recompose'
+import {compose, nest, withProps} from 'recompose'
+import Markdown from 'react-markdown'
 
 import {
   enumSelect,
@@ -12,11 +13,11 @@ import {
   randomVerbs,
   withThemeProvider,
   withCentered,
-  Arrangement,
   RepeatedArrangement,
   VariedArrangement,
-  Label,
   Arrangements,
+  Spaced,
+  SpacedInline,
 } from '../../storyutils'
 import * as enums from '../../enums'
 import README from './README.md'
@@ -25,23 +26,36 @@ import Button from './'
 
 const randomIcon = randomEnumValue(enums.Icon)
 const randomColor = randomEnumValue(enums.Color, enums.Intent)
+const randomSize = randomEnumValue(enums.Size)
 const randomText = randomVerbs
 const onClick = action('onClick')
-const ComponentUnderTest = withProps(() => ({
-  onClick,
-  color: randomColor(),
-  children: randomText(),
-}))(Button)
-
-
-const SpacedInline = styled('div')`
-  display: inline-block;
-  margin: 0 0.5rem;
-`
-
-const Spaced = styled('div')`
-  margin: 0.5rem 0;
-`
+const ComponentUnderTest = compose(
+  withProps(() => ({
+    useRandomColor: boolean('Random color?'),
+    baseColor: enumSelect('Base color', [enums.Color, enums.Intent], enums.Color.DEFAULT),
+    useRandomIcon: boolean('Random icon?'),
+    useRandomRightIcon: boolean('Random right icon?'),
+    useRandomSize: boolean('Random size?'),
+    baseSize: enumSelect('Base size', enums.Size, enums.Size.DEFAULT),
+  })),
+  withProps(
+    ({
+      useRandomIcon,
+      useRandomRightIcon,
+      useRandomColor,
+      baseColor,
+      useRandomSize,
+      baseSize,
+    }) => ({
+      onClick,
+      color: useRandomColor ? randomColor() : baseColor,
+      icon: useRandomIcon ? randomIcon() : undefined,
+      rightIcon: useRandomRightIcon ? randomIcon() : undefined,
+      size: useRandomSize ? randomSize() : baseSize,
+      children: randomText(),
+    })
+  ),
+)(Button)
 
 
 const ButtonArrangements = Component => () => (
@@ -68,6 +82,7 @@ const ButtonArrangements = Component => () => (
 
 storiesOf('Atoms|Button/Arrangements', module)
   .addDecorator(withThemeProvider())
+  .addDecorator(withKnobs)
   .add('Variations', () => {
     const Component = nest(Spaced, ComponentUnderTest)
     return (
@@ -76,32 +91,28 @@ storiesOf('Atoms|Button/Arrangements', module)
           label="Size"
           variations={[
             ['Extra small', {size: enums.Size.X_SMALL}],
-            ['Small', {size: enums.Size.SMALL}],
-            ['Default', {size: enums.Size.DEFAULT}],
-            ['Large', {size: enums.Size.LARGE}],
+            ['Small',       {size: enums.Size.SMALL}],
+            ['Default',     {size: enums.Size.DEFAULT}],
+            ['Large',       {size: enums.Size.LARGE}],
             ['Extra large', {size: enums.Size.X_LARGE}]]}>
           {Component}
         </VariedArrangement>
         <VariedArrangement
           label="State"
           variations={[
-            ['Normal', {}],
+            ['Normal',   {}],
             ['Disabled', {isDisabled: true}],
-            ['Busy', {isBusy: true}],
-            ['Busy and disabled', {isDisabled: true, isBusy: true}]]}>
+            ['Busy',     {isBusy: true}]]}>
           {Component}
         </VariedArrangement>
       </Arrangements>
     )})
-  .add('No icons', ButtonArrangements(
+  .add('Spacing', ButtonArrangements(
     ComponentUnderTest))
-  .add('Left icons', ButtonArrangements(
-    withProps(() => ({icon: randomIcon()}))(ComponentUnderTest)))
-
-
-const Markdown = ({children}) => (
-  <div dangerouslySetInnerHTML={{__html: children}} />
-)
+  //.add('No icons', ButtonArrangements(
+  //  ComponentUnderTest))
+  //.add('Left icons', ButtonArrangements(
+  //  withProps(() => ({icon: randomIcon()}))(ComponentUnderTest)))
 
 
 storiesOf('Atoms|Button', module)

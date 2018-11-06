@@ -5,6 +5,7 @@ import {
   defaultProps,
   setDisplayName,
   setPropTypes,
+  withProps,
 } from 'recompose'
 import styled from 'react-emotion'
 
@@ -17,6 +18,7 @@ import {
   transparentizeBy,
 } from '../../theme'
 import Spinner from '../Spinner'
+import Icon from '../Icon'
 
 
 const sizeToVerticalPadding = size => ({
@@ -43,6 +45,14 @@ const sizeToFontSize = size => ({
 })[size] || '0.75rem';
 
 
+const sizeToSpinnerSize = size => ({
+  [enums.Size.X_SMALL]: enums.Size.X_SMALL,
+  [enums.Size.SMALL]: enums.Size.X_SMALL,
+  [enums.Size.LARGE]: enums.Size.DEFAULT,
+  [enums.Size.X_LARGE]: enums.Size.DEFAULT,
+})[size] || enums.Size.SMALL
+
+
 const StyledButton = styled('button')`
   cursor: pointer;
   display: inline-block;
@@ -58,6 +68,7 @@ const StyledButton = styled('button')`
   text-transform: uppercase;
   transition: ${themed('animation.timing.very_fast')} ease-in-out;
   transition-property: transform, color, background-color, box-shadow;
+  transform: scale(1) ${themed('transform.perspective.default')};
 
   &:not([disabled]) {
     color: ${themed('component.button.color.base')};
@@ -85,7 +96,7 @@ const StyledButton = styled('button')`
     color: ${compose(readableColor, shadeBy(0.2), themedBy('palette', 'color'))};
     background: ${compose(shadeBy(0.2), themedBy('palette', 'color'))};
     box-shadow: none;
-    transform: scale(0.98);
+    transform: scale(0.9708);
   }
 
   &[disabled] {
@@ -123,6 +134,21 @@ const ButtonContent = styled('div')`
 `
 
 
+const ButtonText = styled('span')`
+  vertical-align: middle;
+`
+
+
+const LeftIcon = styled(Icon)`
+  margin-right: ${props => props.hasSpacing ? '0.5rem' : 0};
+`
+
+
+const RightIcon = styled(Icon)`
+  margin-left: ${props => props.hasSpacing ? '0.5rem' : 0};
+`
+
+
 export const Button = compose(
   setDisplayName('Atom.Button'),
   defaultProps({
@@ -134,6 +160,11 @@ export const Button = compose(
     rightIcon: enums.Icon.NONE,
     onClick: null,
   }),
+  withProps(
+    ({isBusy, isDisabled}) => ({
+      isDisabled: isBusy || isDisabled,
+    })
+  ),
 )(({
   children,
   isDisabled,
@@ -148,18 +179,29 @@ export const Button = compose(
     disabled={isDisabled}
     color={color}
     size={size}
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <ButtonContent isBusy={isBusy}>
-      {icon && <Icon name={icon} />}
-      {icon && ' '}
-      {children}
+      {
+        icon &&
+        <LeftIcon
+          hasSpacing={!!children}
+          name={icon}
+          size={enums.Size.X_SMALL} />
+      }
+      <ButtonText>{children}</ButtonText>
+      {
+        rightIcon &&
+        <RightIcon
+          hasSpacing={!!children}
+          name={rightIcon}
+          size={enums.Size.X_SMALL} />
+      }
     </ButtonContent>
     <SpinnerContainer isBusy={isBusy}>
-    <StyledSpinner
-      isBusy={isBusy}
-      color={enums.Intent.INFO}
-      size={enums.Size.X_SMALL} />
+      <StyledSpinner
+        isBusy={isBusy}
+        color={enums.Intent.INFO}
+        size={sizeToSpinnerSize(size)} />
     </SpinnerContainer>
   </StyledButton>
 ))

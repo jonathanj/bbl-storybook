@@ -17,7 +17,7 @@ injectGlobal`
 }
 
 body {
-  font-family: "Open sans", sans-serif;
+  font-family: "Basier Circle", sans-serif;
   font-size: 16px;
   padding: 0;
   margin: 0;
@@ -79,6 +79,18 @@ export const readableColor = color =>
   getLuminance(color) > 0.204 ? colors.black : colors.white
 
 
+const border = {
+  width: {
+    thin: '1px',
+    thick: '2px',
+    thicker: '3px',
+  },
+  radius: {
+    slight: '3px',
+  },
+}
+
+
 export const defaultTheme = {
   palette: {
     'default': colors.pastel_grey,
@@ -104,7 +116,73 @@ export const defaultTheme = {
       },
       text_shadow: {
         disabled: `0 1px ${colors.white}`,
-      }
+      },
+    },
+
+    input: {
+      font: {
+        size: {
+          base: '16px',
+        },
+      },
+      min_width: {
+        medium: '15rem',
+      },
+      background: {
+        color: {
+          base: colors.white,
+          disabled: '#F1F2F4',
+          readonly: '#F1F2F4',
+          error: '#FFEDED',
+        },
+      },
+      text: {
+        color: {
+          base: '#212B36',
+          disabled: '#637381',
+          placeholder: '#CFD8DC'
+        },
+      },
+      padding: '0.5625rem',
+      border: {
+        radius: border.radius.slight,
+        color: {
+          base: '#ABB3C0',
+          active: 'transparent',
+          active_: '#03A9F4',
+          disabled: '#DDE0E5',
+          readonly: '#DDE0E5',
+          error: '#FF4C4C',
+        },
+        width: {
+          base: border.width.thin,
+          active: border.width.thick,
+        },
+      },
+      shadow: {
+        active: '0 0 0 2px #03A9F4',
+      },
+    },
+
+    label: {
+      font: {
+        size: '14px',
+        weight: 500,
+      },
+
+      text: {
+        color: {
+          base: '#212B36',
+          active: '#03A9F4',
+          disabled: '#ABB3C0',
+        },
+      },
+
+      supplemental: {
+        font: {
+          size: '14px',
+        },
+      },
     }
   },
 
@@ -115,31 +193,42 @@ export const defaultTheme = {
     },
   },
 
-  border: {
-    width: {
-      thin: '1px',
-      thick: '2px',
-      thicker: '3px',
-    },
-    radius: {
-      slight: '0.2rem',
-    },
-  },
+  border,
+
+  //spacing: {
+  //  xxx_small: '0.1rem',
+  //  xx_small: '0.2rem',
+  //  x_small: '0.4rem',
+  //  small: '0.6rem',
+  //  medium: '1rem',
+  //  large: '1.4rem',
+  //  x_large: '1.6rem',
+  //  xx_large: '1.8rem',
+  //  xxx_large: '2.0rem',
+  //},
+
 
   spacing: {
-    xxx_small: '0.1rem',
-    xx_small: '0.2rem',
-    x_small: '0.4rem',
-    small: '0.6rem',
-    medium: '1rem',
-    large: '1.4rem',
-    x_large: '1.6rem',
-    xx_large: '1.8rem',
-    xxx_large: '2.0rem',
+    xxx_small: '0.375rem',
+    xx_small: '0.5625rem',
+    x_small: '0.9375rem',
+    small: '1.5rem',
+    medium: '1.875rem',
+    large: '3rem',
+    x_large: '3.5rem',
+    xx_large: '4.125rem',
+    xxx_large: '4.875rem',
   },
 
   shadow: {
-    elevation_2: '0 1px 2px rgba(0, 0, 0, 0.24)',
+    elevation_2: '0 1px 3px rgba(0, 0, 0, 0.15)',
+    elevation_4: '0 1px 6px rgba(0, 0, 0, 0.15)',
+  },
+
+  transform: {
+    perspective: {
+      'default': 'perspective(1px)',
+    },
   },
 }
 
