@@ -9,7 +9,6 @@ import {
   withProps,
 } from 'recompose'
 import styled from 'react-emotion'
-//import ImagePalette from 'react-image-palette'
 import ImagePalette from 'react-palette'
 import {readableColor, tint, shade, darken, opacify} from 'polished'
 import {fromJS, Map} from 'immutable'
@@ -33,17 +32,19 @@ const Container = styled('div')`
   padding: 1rem;
   background: linear-gradient(
     150deg,
-    ${props => tint(0.7, props.primaryColor)},
-    ${props => tint(0.4, props.primaryColor)});
-  border: 1px solid ${props => tint(0.85, props.primaryColor)};
+    ${props => tint(1, props.primaryColor)},
+    ${props => tint(0.9, props.primaryColor)});
+  border: 4px solid ${props => props.primaryColor};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   color: ${props => darken(0.1, shade(0.4, props.primaryColor))};
   transition: 300ms ease-in-out box-shadow;
-  min-width: 400px;
+  min-width: 600px;
+
+  --border-radius: 0.25rem;
 
   & img {
     border: 8px solid ${props => props.secondaryColor};
-    box-shadow: 0 2px 16px ${props => opacify(-0.35, darken(0.3, props.secondaryColor))};
+    box-shadow: 0 4px 24px ${props => opacify(-0.5, darken(0.2, props.secondaryColor))};
   }
 
   & table {
@@ -51,7 +52,15 @@ const Container = styled('div')`
   }
 
   & table td, & table th {
-    padding: 0.25rem;
+    padding: 0.5rem 0.5rem;
+  }
+
+  & tbody td:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  & tbody td:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
   }
 
   & table th {
@@ -68,19 +77,11 @@ const Container = styled('div')`
 
   & tbody tr {
     cursor: pointer;
-    transform: scale(1);
-    transition: 250ms ease-in-out;
-    transition-property: transform, background, box-shadow;
-  }
-
-  & tbody tr:nth-child(2n) {
-    background: rgba(255, 255, 255, 0.1);
   }
 
   & tbody tr:hover {
-    xxx_transform: scale(1.075);
-    background: rgba(255, 255, 255, 0.55);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: ${props => readableColor(props.secondaryColor)};
+    background: ${props => tint(0.4, props.secondaryColor)};
   }
 `
 
@@ -98,7 +99,8 @@ const Title = styled('div')`
     width: 200px;
     height: 200px;
     transform: perspective(900px);
-    transition: 300ms ease-in-out transform;
+    transition: 300ms ease-in-out;
+    transition-property: transform, box-shadow;
   }
 
   & img:hover {
@@ -121,7 +123,6 @@ const TitleInfo = styled('div')`
 
   h1 {
     font-weight: 600;
-    text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.65);
   }
 
   h3 {
@@ -154,6 +155,7 @@ const columns = fromJS([
   {
     title: '#',
     accessor: 'number',
+    render: value => (<strong>{value}.</strong>)
   },
   {
     title: 'Title',
@@ -180,10 +182,8 @@ export const Listing = compose(
 )(({release, coverArt}) => (
   <ImagePalette image={coverArt}>
     {
-      palette => {
-        console.log(palette)
-        return (
-        <Container primaryColor={palette.muted} secondaryColor={palette.vibrant}>
+      palette => (
+        <Container primaryColor={palette.lightMuted} secondaryColor={palette.vibrant}>
           <Title>
             <img src={coverArt} />
             <TitleInfo>
@@ -196,7 +196,7 @@ export const Listing = compose(
             columns={columns}
             data={release.get('tracks')} />
         </Container>
-      )}
+      )
     }
   </ImagePalette>
 ))
