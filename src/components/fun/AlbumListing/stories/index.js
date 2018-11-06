@@ -7,7 +7,7 @@ import {action} from '@storybook/addon-actions'
 import {withKnobs, select, boolean} from '@storybook/addon-knobs'
 import ImagePalette from 'react-palette'
 
-import {Listing} from '../'
+import {AlbumListing} from '../'
 
 const _reqmbid = require.context('./', true, /\.(json|jpg)$/)
 
@@ -68,7 +68,7 @@ const Component = ({mbid, debugPalette}) => {
         </ImagePalette>
       }
       <BlockCentered>
-        <Listing
+        <AlbumListing
           coverArt={coverArt}
           release={release} />
       </BlockCentered>
@@ -85,7 +85,7 @@ const mbids = {
 }
 
 
-storiesOf('Listing', module)
+storiesOf('Fun|AlbumListing', module)
   .addDecorator(withKnobs)
   .add('Knobs', () => (
     <Component

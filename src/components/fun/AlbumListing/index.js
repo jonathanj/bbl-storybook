@@ -13,7 +13,7 @@ import ImagePalette from 'react-palette'
 import {readableColor, tint, shade, darken, opacify} from 'polished'
 import {fromJS, Map} from 'immutable'
 
-import Table from '../Table'
+import Table from '../../Table'
 
 
 const simpleRelease = release =>
@@ -169,8 +169,8 @@ const columns = fromJS([
 ])
 
 
-export const Listing = compose(
-  setDisplayName('BrownBagLunch.Listing'),
+export const AlbumListing = compose(
+  setDisplayName('Fun.AlbumListing'),
   setPropTypes({
     //data: IT...,
     coverArt: T.string.isRequired,
@@ -202,4 +202,4 @@ export const Listing = compose(
 ))
 
 
-export default Listing
+export default AlbumListing
