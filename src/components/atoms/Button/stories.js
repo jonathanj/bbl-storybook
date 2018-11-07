@@ -109,10 +109,6 @@ storiesOf('Atoms|Button/Arrangements', module)
     )})
   .add('Spacing', ButtonArrangements(
     ComponentUnderTest))
-  //.add('No icons', ButtonArrangements(
-  //  ComponentUnderTest))
-  //.add('Left icons', ButtonArrangements(
-  //  withProps(() => ({icon: randomIcon()}))(ComponentUnderTest)))
 
 
 storiesOf('Atoms|Button', module)

@@ -102,17 +102,6 @@ storiesOf('Atoms|Label/Arrangements', module)
   })
 
 
-const Placeholder = styled('div')`
-  width: 15rem;
-  height: 38px;
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent, transparent 6px,
-    #ddd 6px, #ddd 12px);
-  box-shadow: ${themed('shadow.elevation_2')};
-`
-
-
 const Component = ({children, ...props}) => (
   <ComponentUnderTest {...props}>
     {children(props)}
@@ -133,6 +122,6 @@ storiesOf('Atoms|Label', module)
       error={text('error', '')}
       supplemental={text('supplemental', 'Supplemental information')}
       label={text('label', 'Label')}>
-      {Input}
+    {Input}
     </Component>
   ))
