@@ -119,7 +119,7 @@ storiesOf('Atoms|Button', module)
   .addDecorator(withThemeProvider())
   .addDecorator(withCentered())
   .addDecorator(withKnobs)
-  .add('README', () => <Markdown>{README}</Markdown>)
+  .add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
   .add('Knobs', () => (
     <Button
       onClick={onClick}
@@ -133,7 +133,4 @@ storiesOf('Atoms|Button', module)
     >
       {text('children', 'Click this')}
     </Button>
-  ))
-  .add('Context', () => (
-    <Button>XXX</Button>
   ))

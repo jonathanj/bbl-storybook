@@ -19,7 +19,7 @@ import {
 } from '../../storyutils'
 import defaultTheme, {themed} from '../../theme'
 import * as enums from '../../enums'
-//import README from './README.md'
+import README from './README.md'
 import Label from './'
 import Input from '../Input'
 
@@ -124,7 +124,7 @@ storiesOf('Atoms|Label', module)
   .addDecorator(withThemeProvider())
   .addDecorator(withCentered())
   .addDecorator(withKnobs)
-  //.add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
+  .add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
   .add('Knobs', () => (
     <Component
       isDisabled={boolean('isDisabled', false)}

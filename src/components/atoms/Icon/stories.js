@@ -2,6 +2,7 @@ import React from 'react'
 import {storiesOf} from '@storybook/react'
 import {withKnobs} from '@storybook/addon-knobs'
 import {nest, withProps} from 'recompose'
+import Markdown from 'react-markdown'
 
 import {
   enumSelect,
@@ -50,6 +51,7 @@ storiesOf('Atoms|Icon', module)
   .addDecorator(withThemeProvider())
   .addDecorator(withCentered())
   .addDecorator(withKnobs)
+  .add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
   .add('Knobs', () => (
     <Icon
       size={enumSelect('size', enums.Size, enums.Size.DEFAULT)}

@@ -3,6 +3,7 @@ import {storiesOf} from '@storybook/react'
 import {withKnobs} from '@storybook/addon-knobs'
 import {nest, withProps} from 'recompose'
 import styled from 'react-emotion'
+import Markdown from 'react-markdown'
 
 import {
   enumSelect,
@@ -15,7 +16,7 @@ import {
   Spaced,
 } from '../../storyutils'
 import * as enums from '../../enums'
-//import README from './README.md'
+import README from './README.md'
 import Spacer from './'
 
 
@@ -52,6 +53,7 @@ storiesOf('Atoms|Spacer', module)
   .addDecorator(withThemeProvider())
   .addDecorator(withCentered())
   .addDecorator(withKnobs)
+  .add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
   .add('Knobs', () => (
     <ComponentUnderTest
       spacing={enumSelect('spacing', enums.Spacing, enums.Spacing.MEDIUM)} />

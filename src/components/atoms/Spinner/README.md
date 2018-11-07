@@ -1,4 +1,4 @@
-# Spacer
+# Spinner
 
 ## Intent
 

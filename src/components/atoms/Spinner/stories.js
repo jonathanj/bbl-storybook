@@ -3,6 +3,7 @@ import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {withKnobs, boolean, select, text} from '@storybook/addon-knobs'
 import {nest, withProps} from 'recompose'
+import Markdown from 'react-markdown'
 
 import {
   enumSelect,
@@ -17,6 +18,7 @@ import {
   Spaced,
 } from '../../storyutils'
 import * as enums from '../../enums'
+import README from './README.md'
 import Spinner from './'
 
 
@@ -47,7 +49,7 @@ storiesOf('Atoms|Spinner', module)
   .addDecorator(withThemeProvider())
   .addDecorator(withCentered())
   .addDecorator(withKnobs)
-  //.add('README', () => <Markdown>{README}</Markdown>)
+  .add('README', () => <Markdown>{README}</Markdown>, {isCentered: false})
   .add('Knobs', () => (
     <Spinner
       size={enumSelect('size', enums.Size, enums.Size.DEFAULT)}
